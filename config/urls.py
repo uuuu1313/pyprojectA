@@ -20,5 +20,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pybo/', include('pybo.urls')),
+    path('pybo/', include('pybo.urls')), # pybo/ 로 시작하는 url은 pybo app의 urls.py에 정의함
 ]
