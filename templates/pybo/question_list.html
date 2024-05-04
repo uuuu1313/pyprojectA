@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>질문리스트</title>
+</head>
+<body>
+    {% if question_list %} <!--views.py에 정의한 해당 함수의 question_list가 존재할때 -->
+        <ul>
+            {% for question in question_list %}
+            <p>순서: {{forloop.revcounter}}</p>
+            <li>
+                <a href="/pybo/{{question.id}}/">{{question.subject}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>질문이 없습니다.</p>
+    {% endif %}
+</body>
+</html>
