@@ -10,7 +10,7 @@
             {% for question in question_list %}
             <p>순서: {{forloop.revcounter}}</p>
             <li>
-                <a href="/pybo/{{question.id}}/">{{question.subject}}</a>
+                <a href="{% url 'pybo:detail' question_id=question.id %}">{{question.subject}}</a> <!-- url 별칭사용 -->
             </li>
             {% endfor %}
         </ul>
