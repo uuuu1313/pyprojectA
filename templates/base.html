@@ -12,8 +12,11 @@
     <title>Hello, pybo!</title>
 </head>
 <body>
+<!-- 네비바 -->
+{% include 'navbar.html' %}
 <!-- 안에 삽입될 내용 -->
 {% block content %}
 {% endblock %}
 </body>
+<script src="{% static 'bootstatp.min.js' %}"></script>
 </html>

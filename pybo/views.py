@@ -4,13 +4,19 @@ from django.http import HttpResponseNotAllowed
 from django.utils import timezone
 from .models import Question  # tb 추가
 from .forms import QuestionForm, AnswerForm  # 검증
+from django.core.paginator import Paginator # 페이징
 
 
 # Create your views here.
 
 def index(request):
+    page = request.GET.get('page', '1') # 디폴트 페이지는 1로 설정
     question_list = Question.objects.order_by('-create_date')  # 날짜의 역순(최신순)으로 조회
-    context = {'question_list': question_list}  # .html의 question_list에 값에 대입됨 해당
+    paginator = Paginator(question_list, 15) # 페이지당 15개씩 보이기
+    page_obj = paginator.get_page(page) # 장고 내부적으로 전체 데이터를 조회하지않고 해당 페이지의 데이터만 조회하는 쿼리
+    context = {'question_list': page_obj}
+
+    # context = {'question_list': question_list}  # .html의 question_list에 값에 대입됨 해당
     return render(request, 'pybo/question_list.html', context)  # 요청은 pybo/question_list.html의 템플릿에 담기
     # config/settins.py 의 templates에 경로 설정하기
 
