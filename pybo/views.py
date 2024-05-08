@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotAllowed
@@ -26,7 +27,7 @@ def detail(request, question_id):
     context = {'question': question}  # .html question은 question 값이 대입됨
     return render(request, 'pybo/question_detail.html', context)
 
-
+@login_required(login_url='common:login') # 자바의 어노테이션, 미로그인시 urls의 common:login 경로로 이동시킴
 def answer_create(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     # question.answer_set.create(content=request.POST.get('content'), create_date=timezone.now())
@@ -39,21 +40,23 @@ def answer_create(request, question_id):
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save(commit=False)
+            answer.author = request.user # request.user 는 현재 로그인한 계정의 User 모델 객체
             answer.create_date = timezone.now()
             answer.question = question
             answer.save()
             return redirect('pybo:detail', question_id=question.id)
     else:
-        return HttpResponseNotAllowed('Only POST is possible.')
+        form = AnswerForm()
     context = {'question': question, 'form': form}
     return render(request, 'pybo/question_detail.html', context)
 
-
+@login_required(login_url='common:login') # 자바의 어노테이션과 동일, 미로그인시 urls의 common:login 경로로 이동시킴
 def question_create(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)  # request.POST 에는 입력안 값이 저장됨
         if form.is_valid():  # 폼이 유효할 때
             question = form.save(commit=False)  # commit=False는 임시 저장의 뜻, question 객체를 리턴함
+            question.author = request.user # request.user는 현재 로그인한 계정의 User 모델 객체
             question.create_date = timezone.now()
             question.save()
             return redirect('pybo:index')
