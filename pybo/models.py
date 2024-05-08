@@ -14,6 +14,7 @@ class Question(models.Model): # Question Tb 생성
         return self.subject
 
 class Answer(models.Model): # Answer Tb 생성
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE) # 외래키의 값이 삭제되면 같이 삭제되는 필드
     content = models.TextField()
     create_date = models.DateTimeField()
