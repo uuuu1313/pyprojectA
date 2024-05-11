@@ -9,6 +9,7 @@
             <th style="width:50%">제목</th>
             <th>작성자</th>
             <th>작성일시</th>
+            <th>수정일시</th>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
             </td>
             <td>{{ question.author.username }}</td>
             <td>{{ question.create_date }}</td>
+            <td>{{ question.modify_date|default_if_none:'' }}</td>
         </tr>
         {% endfor %}
         {% else %}

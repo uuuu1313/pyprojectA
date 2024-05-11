@@ -9,6 +9,7 @@ class Question(models.Model): # Question Tb 생성
     subject = models.CharField(max_length=200)
     content = models.TextField()
     create_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.subject
@@ -18,4 +19,5 @@ class Answer(models.Model): # Answer Tb 생성
     question = models.ForeignKey(Question, on_delete=models.CASCADE) # 외래키의 값이 삭제되면 같이 삭제되는 필드
     content = models.TextField()
     create_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
 
