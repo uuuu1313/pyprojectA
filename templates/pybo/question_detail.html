@@ -87,6 +87,7 @@
             <label for="content" class="form-label">답변내용</label>
             <textarea {% if not user.is_authenticated %} placeholder="로그인 후 답변가능" disabled {% endif %}
                     name="content" id="content" class="form-control" rows="10"></textarea>
+                <!-- name 필드는 Answer가 가지는 걸럼중 하나에 해당해야함 -->
         </div>
         <input type="submit" value="답변등록" class="btn btn-primary">
     </form>
